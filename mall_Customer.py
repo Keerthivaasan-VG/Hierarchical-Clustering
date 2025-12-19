@@ -7,7 +7,6 @@ from sklearn.cluster import AgglomerativeClustering
 from sklearn.metrics import silhouette_score
 from scipy.cluster.hierarchy import dendrogram, linkage
 import joblib
-import os
 
 # ================= PAGE CONFIG =================
 st.set_page_config(
@@ -42,7 +41,6 @@ h1, h2, h3 {
     font-size: 13px;
     margin-top: 30px;
 }
-
 </style>
 """, unsafe_allow_html=True)
 
@@ -54,14 +52,19 @@ st.markdown("<p>Hierarchical Clustering using Machine Learning</p>", unsafe_allo
 st.markdown("<div class='card'>", unsafe_allow_html=True)
 st.subheader("📂 Dataset Preview")
 
-CSV_FILE = "https://drive.google.com/uc?export=download&id=1czxTGMNMm6LStI0MgOF4N7eKT-EGYLPg"
+CSV_URL = "https://drive.google.com/uc?export=download&id=1czxTGMNMm6LStI0MgOF4N7eKT-EGYLPg"
 
-if not os.path.exists(CSV_FILE):
-    st.error("❌ CSV file not found. Please upload 'Mall_Customers (2).csv' to the repository.")
+@st.cache_data
+def load_data(url):
+    return pd.read_csv(url)
+
+try:
+    df = load_data(CSV_URL)
+    st.dataframe(df.head())
+except Exception:
+    st.error("❌ Failed to load dataset. Please check the Google Drive link.")
     st.stop()
 
-df = pd.read_csv(CSV_FILE)
-st.dataframe(df.head())
 st.markdown("</div>", unsafe_allow_html=True)
 
 # ================= PREPROCESSING =================
@@ -111,7 +114,8 @@ fig2, ax2 = plt.subplots(figsize=(8, 5))
 ax2.scatter(
     df["Annual Income (k$)"],
     df["Spending Score (1-100)"],
-    c=labels
+    c=labels,
+    cmap="viridis"
 )
 ax2.set_xlabel("Annual Income (k$)")
 ax2.set_ylabel("Spending Score (1-100)")
@@ -135,8 +139,12 @@ if st.button("Save Model & Scaler"):
     joblib.dump(hc, "hierarchical_model.pkl")
     joblib.dump(scaler, "scaler.pkl")
     st.success("Model and Scaler saved successfully!")
+
 st.markdown("</div>", unsafe_allow_html=True)
 
 # ================= FOOTER =================
-st.markdown("<div class='footer'>📘 For academic and internship use only</div>", unsafe_allow_html=True)
+st.markdown(
+    "<div class='footer'>📘 For academic and internship use only</div>",
+    unsafe_allow_html=True
+)
 
