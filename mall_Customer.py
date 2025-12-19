@@ -54,7 +54,7 @@ st.markdown("<p>Hierarchical Clustering using Machine Learning</p>", unsafe_allo
 st.markdown("<div class='card'>", unsafe_allow_html=True)
 st.subheader("📂 Dataset Preview")
 
-CSV_FILE = "https://drive.google.com/file/d/1czxTGMNMm6LStI0MgOF4N7eKT-EGYLPg/view?usp=sharing"
+CSV_FILE = "https://drive.google.com/uc?export=download&id=1czxTGMNMm6LStI0MgOF4N7eKT-EGYLPg"
 
 if not os.path.exists(CSV_FILE):
     st.error("❌ CSV file not found. Please upload 'Mall_Customers (2).csv' to the repository.")
@@ -139,3 +139,4 @@ st.markdown("</div>", unsafe_allow_html=True)
 
 # ================= FOOTER =================
 st.markdown("<div class='footer'>📘 For academic and internship use only</div>", unsafe_allow_html=True)
+
