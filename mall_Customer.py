@@ -73,7 +73,7 @@ st.subheader("⚙️ Data Preprocessing")
 
 df_processed = df.copy()
 df_processed.drop("CustomerID", axis=1, inplace=True)
-df_processed["Genre"] = LabelEncoder().fit_transform(df_processed["Genre"])
+df_processed["Gender"] = LabelEncoder().fit_transform(df_processed["Gender"])
 
 scaler = StandardScaler()
 X_scaled = scaler.fit_transform(df_processed)
@@ -147,4 +147,5 @@ st.markdown(
     "<div class='footer'>📘 For academic and internship use only</div>",
     unsafe_allow_html=True
 )
+
 
